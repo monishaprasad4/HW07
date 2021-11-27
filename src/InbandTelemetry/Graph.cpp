@@ -7,7 +7,6 @@ Graph::Graph()
 {
 	numVertices = 0;
 	numEdges = 0;
-    vertices = NULL;
 }
 
 
@@ -29,40 +28,30 @@ bool Graph::InitGraph(const char* fileName)
         int num2;
 
         sscanf(line, "%d%d", &num1, &num2);
+       // cout << num1 << " " << num2 << endl;
 
         if (linenumber == 1)
         {
             numVertices = num1;
             numEdges = num2;
-
-            vertices = new int* [numVertices+1];
-
-            for (int row = 0; row <= numVertices; row++)
-            {
-                vertices[row] = new int[numVertices+1];
-
-                for (int col = 0; col <= numVertices; col++)
-                {
-                    vertices[row][col] = 0;
-                }
-            }
-
+            vertexList = new LinkedList[numVertices + 1];
             linenumber++;
             continue;
         }
 
+        vertexList[num1].appendNode(num2);
+        vertexList[num2].appendNode(num1);
+
+
+
         linenumber++;
-        if (linenumber == numEdges + 1)
+        if (linenumber > numEdges + 1)
         {
             break;
         }
 
 
-        int* row = vertices[num1];
-        row[num2] = 1;
-
-        row = vertices[num2];
-        row[num1] = 1;
+        
     }
 
     fclose(fp);
@@ -82,15 +71,26 @@ int Graph::GetNumEdges()
 	
 void Graph::Print()
 {
-    for (int row = 1; row <= numVertices; row++)
+    for (int i = 1; i <= numVertices; i++)
     {
-        for (int col = 1; col <= numVertices; col++)
-        {
-            cout << vertices[row][col] << " ";
-        }
-
+        cout << i << " ";
+        vertexList[i].printList();
         cout << endl;
     }
 
 
+}
+
+void Graph::printOddVerticies()
+{
+    cout << "The odd degree verticies in G: { O = { ";
+    for (int i = 1; i <= numVertices; i++)
+    {
+        int count = vertexList[i].getCount();
+        if (count % 2 == 1)
+        {
+            cout << i << " ";
+        }
+    }
+    cout << "} }" << endl;
 }

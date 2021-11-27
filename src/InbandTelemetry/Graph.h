@@ -1,5 +1,6 @@
 #pragma once
 #include <stdio.h>
+#include "LinkedList.h"
 
 class Graph
 {
@@ -9,10 +10,11 @@ public:
 	int GetNumVertices();
 	int GetNumEdges();
 	void Print();
+	void printOddVerticies();
 
 private:
 	int numVertices;
 	int numEdges;
-	int** vertices;
+	LinkedList* vertexList;
 };
 
