@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "graph.h"
+#include "LinkedList.h"
 
 using namespace std;
 
@@ -14,6 +15,10 @@ int main()
 
     bool retValue = graph->InitGraph(inputFile);
 
+    //graph->Print();
+
+    graph->printOddVerticies();
+
     if (!retValue)
     {
         cout << "Unable to initialize graph from input file " <<
@@ -22,7 +27,7 @@ int main()
             return -1;
     }
 
-    graph->Print();
+    
 
     return 0;
 }
