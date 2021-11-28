@@ -164,7 +164,7 @@ void Graph::PrintShortestPathOddVertices()
 
     for (Node* node = oddVertices->head; node != NULL; node = node->next)
     {
-        printf("  %2d", node->val);
+        printf(" %3d", node->val);
     }
 
     printf("\n--- -+-");
@@ -178,12 +178,12 @@ void Graph::PrintShortestPathOddVertices()
     for (Node* node = oddVertices->head; node != NULL; node = node->next)
     {
         int vertex = node->val;
-        printf(" %2d  | ", vertex);
+        printf("%3d  | ", vertex);
 
         for (Node* node2 = oddVertices->head; node2 != NULL; node2 = node2->next)
         {
             int distance = (node2->val == vertex) ? 0 : distanceMatrix[vertex][node2->val];
-            printf("  %2d", distance);
+            printf(" %3d", distance);
         }
 
         printf("\n");

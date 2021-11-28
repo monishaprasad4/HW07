@@ -26,10 +26,7 @@ int main()
         return -1;
     }
 
-    
     graph->PrintOddVertices();
-
-    //graph->FindShortestPath();
 
     graph->PrintShortestPathOddVertices();
 
