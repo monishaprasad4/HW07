@@ -6,15 +6,17 @@ class Graph
 {
 public:
 	Graph();
-	bool InitGraph(const char* fileName);
+	bool LoadGraph(const char* fileName);
 	int GetNumVertices();
 	int GetNumEdges();
 	void Print();
-	void printOddVerticies();
+	void FindShortestPath();
+	LinkedList GetOddVertices();
 
 private:
 	int numVertices;
 	int numEdges;
 	LinkedList* vertexList;
+	int** fwMatrix;
 };
 
