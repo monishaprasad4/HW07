@@ -9,6 +9,7 @@ Graph::Graph()
 	numEdges = 0;
     vertexList = NULL;
     distanceMatrix = NULL;
+    distanceMatrixOddVertices = NULL;
     oddVertices = NULL;
 }
 
@@ -146,6 +147,50 @@ void Graph::FindShortestPath()
     */
 }
 
+void Graph::FindShortestPathOddVertices()
+{
+    if (distanceMatrixOddVertices != NULL)
+    {
+        return;
+    }
+
+    FindOddVertices();
+
+    int numOddVertices = oddVertices->GetCount();
+
+    distanceMatrixOddVertices = new int* [numOddVertices + 1];
+    for (int i = 0; i < numOddVertices + 1; i++)
+    {
+        distanceMatrixOddVertices[i] = new int[numOddVertices + 1];
+    }
+
+    int index = 1;
+    for (Node* node = oddVertices->head; node != NULL; node = node->next, index++)
+    {
+        distanceMatrixOddVertices[0][index] = node->val;
+        distanceMatrixOddVertices[index][0] = node->val;
+    }
+
+
+    
+    int row = 1;
+    for (Node* node = oddVertices->head; node != NULL; node = node->next, row++)
+    {
+        int vertex = node->val;
+        int col = 1;
+        for (Node* node2 = oddVertices->head; node2 != NULL; node2 = node2->next, col++)
+        {
+            int distance = (node2->val == vertex) ? 0 : distanceMatrix[vertex][node2->val];
+            distanceMatrixOddVertices[row][col] = distance;
+        }
+    }
+
+    for (int i = 1; i <= numOddVertices; i++)
+    {
+        
+    }
+}
+
 void Graph::PrintShortestPathOddVertices()
 {
     if (distanceMatrix == NULL)
@@ -160,12 +205,23 @@ void Graph::PrintShortestPathOddVertices()
         FindOddVertices();
     }
 
+    if (distanceMatrixOddVertices == NULL)
+    {
+        FindShortestPathOddVertices();
+    }
+
     printf("     | ");
 
+    for (int i = 1; i <= oddVertices->GetCount(); i++)
+    {
+        printf(" %3d", distanceMatrixOddVertices[0][i]);
+    }
+    /*
     for (Node* node = oddVertices->head; node != NULL; node = node->next)
     {
         printf(" %3d", node->val);
     }
+    */
 
     printf("\n--- -+-");
     for (int i = 0; i < oddVertices->GetCount(); i++)
@@ -175,6 +231,18 @@ void Graph::PrintShortestPathOddVertices()
 
     printf("\n");
 
+    for (int row = 1; row <= oddVertices->GetCount(); row++)
+    {
+        printf("%3d  | ", distanceMatrixOddVertices[row][0]);
+
+        for (int col = 1; col <= oddVertices->GetCount(); col++)
+        {
+            printf(" %3d", distanceMatrixOddVertices[row][col]);
+        }
+
+        printf("\n");
+    }
+    /*
     for (Node* node = oddVertices->head; node != NULL; node = node->next)
     {
         int vertex = node->val;
@@ -188,6 +256,7 @@ void Graph::PrintShortestPathOddVertices()
 
         printf("\n");
     }
+    */
 }
 
 void Graph::Print()

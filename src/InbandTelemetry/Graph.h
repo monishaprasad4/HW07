@@ -12,6 +12,7 @@ public:
 	void Print();
 	void FindShortestPath();
 	void PrintShortestPathOddVertices();
+	void FindShortestPathOddVertices();
 	void PrintOddVertices();
 	void FindOddVertices();
 
@@ -21,7 +22,7 @@ private:
 	LinkedList* vertexList;
 	int** distanceMatrix;
 	LinkedList* oddVertices;
-	
+	int** distanceMatrixOddVertices;
 
 };
 
