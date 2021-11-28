@@ -8,8 +8,9 @@ public:
 	void AppendNode(int val);
 	int GetCount();
 	void Dispose();
-	Node* Head;
-	Node* Tail;
+
+	Node* head;
+	Node* tail;
 
 private:
 	int count;

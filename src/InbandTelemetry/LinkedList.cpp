@@ -6,8 +6,8 @@ using namespace std;
 
 LinkedList::LinkedList()
 {
-	Head = NULL;
-	Tail = NULL;
+	head = NULL;
+	tail = NULL;
 	count = 0;
 }
 
@@ -18,16 +18,16 @@ void LinkedList::AppendNode(int val)
 	node->val = val;
 	node->next = NULL;
 
-	if (Head == NULL)
+	if (head == NULL)
 	{
-		Head = node;
-		Tail = node;
+		head = node;
+		tail = node;
 	}
 
 	else
 	{
-		Tail->next = node;
-		Tail = node;
+		tail->next = node;
+		tail = node;
 	}
 
 	count++;
@@ -35,7 +35,7 @@ void LinkedList::AppendNode(int val)
 
 void LinkedList::Print()
 {
-	for (Node* node = Head; node != NULL; node = node->next)
+	for (Node* node = head; node != NULL; node = node->next)
 	{
 		cout << node->val << " ";
 	}
@@ -49,7 +49,7 @@ int LinkedList::GetCount()
 
 void LinkedList::Dispose()
 {
-	for (Node* node = Head; node != NULL; node = node->next)
+	for (Node* node = head; node != NULL; node = node->next)
 	{
 		Node *temp = node->next;
 		if (temp != NULL)
@@ -58,8 +58,8 @@ void LinkedList::Dispose()
 		}
 	}
 
-	Head = NULL;
-	Tail = NULL;
+	head = NULL;
+	tail = NULL;
 }
 
 
