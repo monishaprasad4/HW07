@@ -8,6 +8,8 @@ Graph::Graph()
 	numVertices = 0;
 	numEdges = 0;
     vertexList = NULL;
+    distanceMatrix = NULL;
+    oddVertices = NULL;
 }
 
 
@@ -82,10 +84,10 @@ int Graph::GetNumEdges()
 	
 void Graph::FindShortestPath()
 {
-    fwMatrix = new int* [numVertices + 1];
+    distanceMatrix = new int* [numVertices + 1];
     for (int i = 0; i < numVertices + 1; i++)
     {
-        fwMatrix[i] = new int[numVertices + 1];
+        distanceMatrix[i] = new int[numVertices + 1];
     }
 
     for (int i = 1; i <= numVertices; i++)
@@ -95,39 +97,24 @@ void Graph::FindShortestPath()
 
             if (i == j)
             {
-                fwMatrix[i][j] = 0;
+                distanceMatrix[i][j] = 0;
             }
             else
             {
-                fwMatrix[i][j] = INT_MAX/2;
+                distanceMatrix[i][j] = INT_MAX/2;
             }
         }
     }
 
     for (int i = 1; i <= numVertices; i++)
     {
-        int vertex = vertexList[i].Head->val;
+        int vertex = vertexList[i].head->val;
 
-        for (Node* node = vertexList[i].Head->next; node != NULL; node = node->next)
+        for (Node* node = vertexList[i].head->next; node != NULL; node = node->next)
         {
-            fwMatrix[vertex][node->val] = 1;
+            distanceMatrix[vertex][node->val] = 1;
         }
     }
-
-
-
-    /*
-    for (int k = 1; k <= numVertices; k++)
-    {
-        for (int i = 1; i <= numVertices; i++)
-        {
-            cout << fwMatrix[k][i] << " ";
-        }
-
-
-        cout << endl;
-    }
-    */
 
     for (int k = 1; k <= numVertices; k++)
     {
@@ -135,27 +122,72 @@ void Graph::FindShortestPath()
         {
             for (int j = 1; j <= numVertices; j++)
             {
-                if (fwMatrix[i][j] > fwMatrix[i][k] + fwMatrix[k][j])
+                if (distanceMatrix[i][j] > distanceMatrix[i][k] + distanceMatrix[k][j])
                 {
-                    fwMatrix[i][j] = fwMatrix[i][k] + fwMatrix[k][j];
+                    distanceMatrix[i][j] = distanceMatrix[i][k] + distanceMatrix[k][j];
                 }
             }
         }
     }
 
+    /*
     cout << "\n\nFwMatrix: " << endl;
 
     for (int i = 1; i <= numVertices; i++)
     {
         for (int j = 1; j <= numVertices; j++)
         {
-            cout << fwMatrix[i][j] << " ";
+            cout << distanceMatrix[i][j] << " ";
         }
 
         cout << endl;
     }
 
+    */
+}
 
+void Graph::PrintShortestPathOddVertices()
+{
+    if (distanceMatrix == NULL)
+    {
+        FindShortestPath();
+    }
+
+    cout << endl << "Results of Floyd-Warshall on O:" << endl;
+
+    if (oddVertices == NULL)
+    {
+        FindOddVertices();
+    }
+
+    printf("     | ");
+
+    for (Node* node = oddVertices->head; node != NULL; node = node->next)
+    {
+        printf("  %2d", node->val);
+    }
+
+    printf("\n--- -+-");
+    for (int i = 0; i < oddVertices->GetCount(); i++)
+    {
+        printf(" ---");
+    }
+
+    printf("\n");
+
+    for (Node* node = oddVertices->head; node != NULL; node = node->next)
+    {
+        int vertex = node->val;
+        printf(" %2d  | ", vertex);
+
+        for (Node* node2 = oddVertices->head; node2 != NULL; node2 = node2->next)
+        {
+            int distance = (node2->val == vertex) ? 0 : distanceMatrix[vertex][node2->val];
+            printf("  %2d", distance);
+        }
+
+        printf("\n");
+    }
 }
 
 void Graph::Print()
@@ -165,22 +197,35 @@ void Graph::Print()
         vertexList[i].Print();
         cout << endl;
     }
-
-    
 }
 
-LinkedList Graph::GetOddVertices()
+void Graph::FindOddVertices()
 {
-    LinkedList list;
+    if (oddVertices != NULL)
+    {
+        return;
+    }
+    
+    oddVertices = new LinkedList();
 
     for (int i = 1; i <= numVertices; i++)
     {
         int count = vertexList[i].GetCount();
         if (count > 0 && (count - 1) % 2 == 1)
         {
-            list.AppendNode(i);
+            oddVertices->AppendNode(i);
         }
     }
+}
 
-    return list;
+
+void Graph::PrintOddVertices()
+{
+    FindOddVertices();
+
+    cout << "The odd degree verticies in G: { O = { ";
+
+    oddVertices->Print();
+
+    cout << "} }" << endl;
 }

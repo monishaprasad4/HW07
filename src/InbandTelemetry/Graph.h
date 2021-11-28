@@ -11,12 +11,17 @@ public:
 	int GetNumEdges();
 	void Print();
 	void FindShortestPath();
-	LinkedList GetOddVertices();
+	void PrintShortestPathOddVertices();
+	void PrintOddVertices();
+	void FindOddVertices();
 
 private:
 	int numVertices;
 	int numEdges;
 	LinkedList* vertexList;
-	int** fwMatrix;
+	int** distanceMatrix;
+	LinkedList* oddVertices;
+	
+
 };
 
