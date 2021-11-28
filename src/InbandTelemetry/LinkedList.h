@@ -4,13 +4,14 @@ class LinkedList
 {
 public:
 	LinkedList();
-	void printList();
-	void appendNode(int val);
-	int getCount();
+	void Print();
+	void AppendNode(int val);
+	int GetCount();
+	void Dispose();
+	Node* Head;
+	Node* Tail;
 
 private:
-	Node* head;
-	Node* tail;
 	int count;
 };
 
