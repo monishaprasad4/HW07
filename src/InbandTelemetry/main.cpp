@@ -26,21 +26,14 @@ int main()
         return -1;
     }
 
-    //LinkedList list = graph->GetOddVertices();
+    
+    graph->PrintOddVertices();
 
-    //PrintOddVertices(list);
+    //graph->FindShortestPath();
 
-    graph->FindShortestPath();
+    graph->PrintShortestPathOddVertices();
 
     return 0;
 }
 
 
-void PrintOddVertices(LinkedList oddVertices)
-{
-    cout << "The odd degree verticies in G: { O = { ";
-
-    oddVertices.Print();
-
-    cout << "} }" << endl;
-}
