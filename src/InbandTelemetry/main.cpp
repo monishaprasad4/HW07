@@ -9,7 +9,6 @@
 
 using namespace std;
 
-void PrintOddVertices(LinkedList oddVertices);
 
 int main()
 {
