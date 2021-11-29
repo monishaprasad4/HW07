@@ -47,7 +47,7 @@ bool Graph::LoadGraph(const char* fileName)
         {
             numVertices = num1;
             numEdges = num2;
-            vertexList = new LinkedList[numVertices + 1];
+            vertexList = new LinkedList<int>[numVertices + 1];
 
             for (int i = 1; i <= numVertices; i++)
             {
@@ -111,7 +111,7 @@ void Graph::FindShortestPath()
     {
         int vertex = vertexList[i].head->val;
 
-        for (Node* node = vertexList[i].head->next; node != NULL; node = node->next)
+        for (Node<int>* node = vertexList[i].head->next; node != NULL; node = node->next)
         {
             distanceMatrix[vertex][node->val] = 1;
         }
@@ -165,29 +165,22 @@ void Graph::FindShortestPathOddVertices()
     }
 
     int index = 1;
-    for (Node* node = oddVertices->head; node != NULL; node = node->next, index++)
+    for (Node<int>* node = oddVertices->head; node != NULL; node = node->next, index++)
     {
         distanceMatrixOddVertices[0][index] = node->val;
         distanceMatrixOddVertices[index][0] = node->val;
     }
-
-
     
     int row = 1;
-    for (Node* node = oddVertices->head; node != NULL; node = node->next, row++)
+    for (Node<int>* node = oddVertices->head; node != NULL; node = node->next, row++)
     {
         int vertex = node->val;
         int col = 1;
-        for (Node* node2 = oddVertices->head; node2 != NULL; node2 = node2->next, col++)
+        for (Node<int>* node2 = oddVertices->head; node2 != NULL; node2 = node2->next, col++)
         {
             int distance = (node2->val == vertex) ? 0 : distanceMatrix[vertex][node2->val];
             distanceMatrixOddVertices[row][col] = distance;
         }
-    }
-
-    for (int i = 1; i <= numOddVertices; i++)
-    {
-        
     }
 }
 
@@ -216,12 +209,6 @@ void Graph::PrintShortestPathOddVertices()
     {
         printf(" %3d", distanceMatrixOddVertices[0][i]);
     }
-    /*
-    for (Node* node = oddVertices->head; node != NULL; node = node->next)
-    {
-        printf(" %3d", node->val);
-    }
-    */
 
     printf("\n--- -+-");
     for (int i = 0; i < oddVertices->GetCount(); i++)
@@ -242,21 +229,6 @@ void Graph::PrintShortestPathOddVertices()
 
         printf("\n");
     }
-    /*
-    for (Node* node = oddVertices->head; node != NULL; node = node->next)
-    {
-        int vertex = node->val;
-        printf("%3d  | ", vertex);
-
-        for (Node* node2 = oddVertices->head; node2 != NULL; node2 = node2->next)
-        {
-            int distance = (node2->val == vertex) ? 0 : distanceMatrix[vertex][node2->val];
-            printf(" %3d", distance);
-        }
-
-        printf("\n");
-    }
-    */
 }
 
 void Graph::Print()
@@ -275,7 +247,9 @@ void Graph::FindOddVertices()
         return;
     }
     
-    oddVertices = new LinkedList();
+    
+
+    oddVertices = new LinkedList<int>();
 
     for (int i = 1; i <= numVertices; i++)
     {
@@ -290,6 +264,8 @@ void Graph::FindOddVertices()
 
 void Graph::PrintOddVertices()
 {
+    
+
     FindOddVertices();
 
     cout << "The odd degree verticies in G: { O = { ";

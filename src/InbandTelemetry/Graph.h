@@ -19,9 +19,9 @@ public:
 private:
 	int numVertices;
 	int numEdges;
-	LinkedList* vertexList;
+	LinkedList<int>* vertexList;
 	int** distanceMatrix;
-	LinkedList* oddVertices;
+	LinkedList<int>* oddVertices;
 	int** distanceMatrixOddVertices;
 
 };
