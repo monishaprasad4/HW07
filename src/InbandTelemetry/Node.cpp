@@ -1,8 +1,11 @@
 #include "Node.h"
 #include <cstddef>
 
-Node::Node()
+template <class T>
+Node<T>::Node()
 {
 	val = 0;
-	this->next = NULL;
+	next = NULL;
 }
+
+template class Node<int>;

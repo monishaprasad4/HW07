@@ -1,9 +1,11 @@
 #pragma once
+
+template <class T>
 class Node
 {
 public:
 	Node();
-	int val;
-	Node* next;
+	T val;
+	Node<T>* next;
 };
 
